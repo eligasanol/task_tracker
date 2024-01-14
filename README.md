@@ -1,6 +1,6 @@
 # Info
 
-This is a basic Spa Task Tracker API. It provides a basic CRUD for task objects with: name,  description, estimate and state.
+This is a basic Spa Task Tracker API. It provides a basic CRUD for task objects with: name,  description, estimate and state, as well as the ability to get a list of all tasks categorized by state, and get a sum of estimations by state.
 
 # How to run
 
