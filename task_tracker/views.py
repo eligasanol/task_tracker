@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.db.models import Sum
 from .models import Task
-from .serializers import SpaTaskSerializer
+from .serializers import TaskSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import  viewsets
@@ -10,7 +10,7 @@ from rest_framework import  viewsets
 # Creating a ViewSet for basic CRUD operations.
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
-    serializer_class = SpaTaskSerializer
+    serializer_class = TaskSerializer
 
     # Defining partial_update to allow users to patch tasks, users can patch either the name, description, estimate or state.
     def partial_update(self, request, *args, **kwargs):
@@ -29,9 +29,9 @@ def task_list(request):
     in_progress_tasks = Task.objects.filter(state='IN_PROGRESS')
     completed_tasks = Task.objects.filter(state='COMPLETED')
 
-    pending_tasks_serializer = SpaTaskSerializer(pending_tasks, many=True)
-    in_progress_tasks_serializer = SpaTaskSerializer(in_progress_tasks, many=True)
-    completed_tasks_serializer = SpaTaskSerializer(completed_tasks, many=True)
+    pending_tasks_serializer = TaskSerializer(pending_tasks, many=True)
+    in_progress_tasks_serializer = TaskSerializer(in_progress_tasks, many=True)
+    completed_tasks_serializer = TaskSerializer(completed_tasks, many=True)
 
     result = {
         'pending_tasks': pending_tasks_serializer.data,
