@@ -25,14 +25,17 @@ class TaskViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 def task_list(request):
 
+    # Queries to get tasks filtered by state
     pending_tasks = Task.objects.filter(state='PENDING')
     in_progress_tasks = Task.objects.filter(state='IN_PROGRESS')
     completed_tasks = Task.objects.filter(state='COMPLETED')
 
+    # Serializing results
     pending_tasks_serializer = TaskSerializer(pending_tasks, many=True)
     in_progress_tasks_serializer = TaskSerializer(in_progress_tasks, many=True)
     completed_tasks_serializer = TaskSerializer(completed_tasks, many=True)
 
+    # Constructing resulting object
     result = {
         'pending_tasks': pending_tasks_serializer.data,
         'in_progress_tasks': in_progress_tasks_serializer.data,
@@ -44,11 +47,13 @@ def task_list(request):
 # Function that returns the sum of estimate categorized by status
 @api_view(['GET'])
 def sum_of_estimates_by_status(request):
+    
     # Queries to calculate the sum of estimates for each state
     pending_sum = Task.objects.filter(state='PENDING').aggregate(Sum('estimate'))['estimate__sum'] or 0
     in_progress_sum = Task.objects.filter(state='IN_PROGRESS').aggregate(Sum('estimate'))['estimate__sum'] or 0
     completed_sum = Task.objects.filter(state='COMPLETED').aggregate(Sum('estimate'))['estimate__sum'] or 0
 
+    # Constructing resulting object
     response_data = {
         'pending_sum': pending_sum,
         'in_progress_sum': in_progress_sum,
