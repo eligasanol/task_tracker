@@ -21,6 +21,10 @@ class TaskViewSet(viewsets.ModelViewSet):
         self.perform_update(serializer)
         return Response(serializer.data)
 
+# Considering all of my endpoints are related in functionality and the scope of the project, I'm leaving my viewset and my function endpoints in the same file.
+# If the project ever grew in size and more functionalities had to be implemented, I would consider having the viewset and the functions in separate files.
+
+
 # function that returns tasks categorized by state
 @api_view(['GET'])
 def task_list(request):
